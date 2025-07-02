@@ -7,7 +7,7 @@ function App() {
         <>
     <nav className="flex items-center gap-2 p-5 font-bold">
       <Link to="/">NAVBAR</Link>
-      <Link to="/">All Books</Link>
+      <Link to="/books">All Books</Link>
       <Link to="/create-book">Add Book</Link>
       <Link to="/borrow-summary">Borrow Summary</Link>
 
