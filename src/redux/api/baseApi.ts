@@ -2,11 +2,14 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://library-management-iota-sage.vercel.app/api/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://library-management-iota-sage.vercel.app/api/",
+  }),
 
-    tagTypes: ["book", "borrow"],
+  tagTypes: ["book", "borrow"],
 
   endpoints: (builder) => ({
+    //Book Endpoints
     getBooks: builder.query({
       query: () => "/books",
       providesTags: ["book", "borrow"],
@@ -18,9 +21,28 @@ export const baseApi = createApi({
         method: "POST",
         body: bookData,
       }),
-        invalidatesTags: ["book"],
+      invalidatesTags: ["book"],
+    }),
+
+    //Borrow Endpoints
+    getBorrows: builder.query({
+      query: () => "/borrow",
+      providesTags: ["book", "borrow"],
+    }),
+    createBorrow: builder.mutation({
+      query: (borrowData) => ({
+        url: "/borrow/:bookId",
+        method: "POST",
+        body: borrowData,
+      }),
+      invalidatesTags: ["book"],
     }),
   }),
 });
 
-export const { useGetBooksQuery, useCreateBookMutation} = baseApi;
+export const {
+  useGetBooksQuery,
+  useCreateBookMutation,
+  useGetBorrowsQuery,
+  useCreateBorrowMutation,
+} = baseApi;

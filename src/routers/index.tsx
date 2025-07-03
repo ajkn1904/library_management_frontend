@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router";
 import AddBook from "@/pages/Books/AddBook";
 import books from "@/pages/Books/books";
 import borrow from "@/pages/Borrow/borrow";
+import BorrowSummary from "@/pages/Borrow/BorrowSummary";
 
 const router = createBrowserRouter([
     {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "borrow-summary",
-                Component: borrow
+                Component: BorrowSummary
             },
         ]
     },

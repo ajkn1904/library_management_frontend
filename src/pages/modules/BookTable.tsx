@@ -13,7 +13,7 @@ const BookTable = ({ book }: IProps) => {
     return (
         <>
             <TableRow className="hover:bg-gray-100 transition-colors duration-200">
-                <TableCell className="font-medium">{book.title}</TableCell>
+                <TableCell className="font-medium max-w-[225px] overflow-hidden overflow-ellipsis">{book.title}</TableCell>
                 <TableCell className="text-left">{book.author}</TableCell>
                 <TableCell className="text-left">{book.genre}</TableCell>
                 <TableCell className="text-center">{book.isbn}</TableCell>

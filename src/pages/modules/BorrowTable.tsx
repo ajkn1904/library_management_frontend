@@ -1,10 +1,20 @@
-import React from 'react';
+import type { IBorrow } from '@/types/borrow.interface';
+import { TableCell, TableRow } from '@/components/ui/table';
+interface IProps {
+    borrow: IBorrow
+}
 
-const BorrowTable = () => {
+
+const BorrowTable = ({borrow}: IProps) => {
+
     return (
-        <div>
-            
-        </div>
+        <>
+            <TableRow className="hover:bg-gray-100 transition-colors duration-200">
+                <TableCell className="font-medium">{borrow.book.title}</TableCell>
+                <TableCell className="text-center">{borrow.book.isbn}</TableCell>
+                <TableCell className="text-center">{borrow.totalQuantity}</TableCell>
+            </TableRow>
+        </>
     );
 };
 
