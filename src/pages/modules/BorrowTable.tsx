@@ -1,7 +1,7 @@
-import type { IBorrow } from '@/types/borrow.interface';
+import type { IBorrowSummary } from '@/types/borrow.interface';
 import { TableCell, TableRow } from '@/components/ui/table';
 interface IProps {
-    borrow: IBorrow
+    borrow: IBorrowSummary
 }
 
 

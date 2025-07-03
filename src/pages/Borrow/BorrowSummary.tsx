@@ -1,10 +1,10 @@
-import type { IBorrow } from '@/types/borrow.interface';
+import type { IBorrowSummary } from '@/types/borrow.interface';
 import { useGetBorrowsQuery } from '../../redux/api/baseApi'
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import BorrowTable from '../modules/BorrowTable';
 
 const BorrowSummary = () => {
-    const { data, isLoading } = useGetBorrowsQuery(undefined);
+const { data, isLoading } = useGetBorrowsQuery(undefined);
 
 
     if (isLoading) {
@@ -30,7 +30,7 @@ const BorrowSummary = () => {
                     </TableHeader>
                     <TableBody className="p-5">
                         {
-                            !isLoading && data.data.map((borrow: IBorrow, index: number) => <BorrowTable borrow={borrow} key={index} />)
+                            !isLoading && data.data.map((borrow: IBorrowSummary, index: number) => <BorrowTable borrow={borrow} key={index} />)
                         }
 
                     </TableBody>
