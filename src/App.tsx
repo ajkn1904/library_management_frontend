@@ -1,5 +1,5 @@
 import { Link, Outlet } from 'react-router'
-import viteLogo from '/vite.svg'
+//import viteLogo from '/vite.svg'
 import Footer from './Footer'
 
 function App() {

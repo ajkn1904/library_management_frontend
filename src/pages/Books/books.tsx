@@ -1,4 +1,4 @@
-import React from 'react';
+
 import type { IBooks } from '../../types/books.interface';
 import BookTable from './../modules/BookTable';
 import { useGetBooksQuery } from '../../redux/api/baseApi'
