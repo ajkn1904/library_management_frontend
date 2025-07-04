@@ -2,7 +2,9 @@ import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
 import type { IBooks } from '@/types/books.interface';
 import { Edit2, Trash2 } from 'lucide-react';
-
+import { useState } from 'react';
+import AddBorrow from '../Borrow/AddBorrow';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 
 interface IProps {
     book: IBooks
@@ -10,6 +12,9 @@ interface IProps {
 
 
 const BookTable = ({ book }: IProps) => {
+    const [state, setState] = useState(false)
+
+
     return (
         <>
             <TableRow className="hover:bg-gray-100 transition-colors duration-200">
@@ -25,9 +30,24 @@ const BookTable = ({ book }: IProps) => {
                             <Trash2 />
                             <Edit2 />
                         </div>
-                        <Button className='w-full'>BORROW</Button>
-                    </div>
 
+                        <Dialog open={state} onOpenChange={setState}>
+                            <form>
+                                <DialogTrigger asChild>
+                                    <Button className="bg-green-500" disabled={!book.available}>BORROW</Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[425px]">
+                                    <DialogHeader>
+                                        <DialogDescription className="sr-only">Fill up the form to Borrow book</DialogDescription>
+                                        <DialogTitle>Borrow</DialogTitle>
+                                    </DialogHeader>
+
+                                    <AddBorrow book={{bookId:book._id, title: book.title, copies: book.copies}} key={book._id}/>
+
+                                </DialogContent>
+                            </form>
+                        </Dialog>
+                    </div>
                 </TableCell>
             </TableRow>
         </>
