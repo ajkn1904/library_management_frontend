@@ -5,8 +5,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateBookMutation } from "@/redux/api/baseApi";
 import type { IBooksMutation } from "@/types/books.interface";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
 
@@ -14,14 +15,35 @@ const AddBook = () => {
 
     const form = useForm();
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const [createBook, { isSuccess, isError, isLoading, data }] = useCreateBookMutation();
+    const [createBook, { isSuccess, isError, isLoading, data, error }] = useCreateBookMutation();
 
     useEffect(() => {
         if (isSuccess) {
+            toast.success("✅ Book created successfully!");
+            form.reset();
             navigate("/books");
         }
     }, [isSuccess, navigate]);
+
+    useEffect(() => {
+        if (isError) {
+            if (error && "data" in error) {
+                const rawMessage = (error.data as { message?: string })?.message || "";
+
+                if (rawMessage.includes("E11000 duplicate key error") && rawMessage.includes("isbn")) {
+                    setErrorMessage("Duplicate ISBN. Try a new ISBN.");
+                } else if (rawMessage.includes("Validation failed")) {
+                    setErrorMessage("Copies must be a positive number. Try again.");
+                } else {
+                    setErrorMessage("An error occurred. Please try again.");
+                }
+            } else {
+                setErrorMessage("An unexpected error occurred.");
+            }
+        }
+    }, [isError, error]);
 
 
     console.log(data);
@@ -30,12 +52,6 @@ const AddBook = () => {
         return <div>Loading...</div>;
     }
 
-    if (isError) {
-        return data?.message || "An error occurred while creating the book.";
-    }
-    if (isSuccess) {
-        return <div className="text-green-500">Book created successfully!</div>;
-    }
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const bookData = {
@@ -45,7 +61,6 @@ const AddBook = () => {
             available: data.copies <= 0 ? false : true,
         }
         await createBook(bookData as IBooksMutation);
-        form.reset();
     }
 
 
@@ -55,6 +70,11 @@ const AddBook = () => {
         <>
             <h1 className='font-bold font-serif text-5xl ml-[15px]'>Add Book</h1>
 
+            {errorMessage && (
+                <div className="bg-red-100 text-red-700 border border-red-300 p-3 rounded-md w-[90%] lg:max-w-[700px] mx-auto mt-4">
+                    {errorMessage}
+                </div>
+            )}
 
             <div className="shadow-2xl border rounded-lg p-5 w-[90%] lg:max-w-[700px] mx-auto my-10">
                 <Form {...form}>
