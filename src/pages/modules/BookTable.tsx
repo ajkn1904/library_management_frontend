@@ -6,6 +6,8 @@ import { useState } from 'react';
 import AddBorrow from '../Borrow/AddBorrow';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import EditBook from './EditBook';
+import toast from 'react-hot-toast';
+import { useDeleteBookMutation } from '@/redux/api/baseApi';
 
 interface IProps {
     book: IBooks;
@@ -15,7 +17,24 @@ interface IProps {
 const BookTable = ({ book }: IProps) => {
     const [borrowState, setBorrowState] = useState(false)
     const [editState, setEditState] = useState(false)
+  
+    const [deleteBook, {isSuccess, isError}] = useDeleteBookMutation();
 
+
+    const handleDelete = async (id: string) => {
+        const doDlt = window.confirm(`Do you want to delete ${book.title}?`);
+        if (doDlt) {
+            await deleteBook({ id });
+        };
+    }
+    
+    
+    if(isSuccess){
+        toast.error(`Book ${book.title} deleted successfully!`);
+    }
+    if (isError) {
+        toast.error("An error occurred while deleting the book. Please try again later.");
+    }
 
     return (
         <>
@@ -29,7 +48,7 @@ const BookTable = ({ book }: IProps) => {
                 <TableCell>
                     <div className='w-full'>
                         <div className='flex justify-between items-center p-4'>
-                            <Trash2 />
+                            <Trash2 className='hover:text-red-600  cursor-pointer'  onClick={() => handleDelete(book._id)} />
 
                             <Dialog open={editState} onOpenChange={setEditState}>
                                 <form>
