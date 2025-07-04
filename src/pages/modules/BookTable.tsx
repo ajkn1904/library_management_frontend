@@ -1,18 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
 import type { IBooks } from '@/types/books.interface';
-import { Edit2, Trash2 } from 'lucide-react';
+import { NotebookPen, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import AddBorrow from '../Borrow/AddBorrow';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import EditBook from './EditBook';
 
 interface IProps {
-    book: IBooks
+    book: IBooks;
 }
 
 
 const BookTable = ({ book }: IProps) => {
-    const [state, setState] = useState(false)
+    const [borrowState, setBorrowState] = useState(false)
+    const [editState, setEditState] = useState(false)
 
 
     return (
@@ -26,15 +28,31 @@ const BookTable = ({ book }: IProps) => {
                 <TableCell>{book.available ? "Available" : "Unavailable"}</TableCell>
                 <TableCell>
                     <div className='w-full'>
-                        <div className='flex justify-between items-center p-1'>
+                        <div className='flex justify-between items-center p-4'>
                             <Trash2 />
-                            <Edit2 />
+
+                            <Dialog open={editState} onOpenChange={setEditState}>
+                                <form>
+                                    <DialogTrigger asChild>
+                                        <NotebookPen className='hover:text-blue-600  cursor-pointer' />
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[425px]">
+                                        <DialogHeader>
+                                            <DialogDescription className="sr-only">Fill up the form to edit book details.</DialogDescription>
+                                            <DialogTitle>Edit Book</DialogTitle>
+                                        </DialogHeader>
+
+                                        <EditBook {...book} setEditState={setEditState} key={book._id} />
+
+                                    </DialogContent>
+                                </form>
+                            </Dialog>
                         </div>
 
-                        <Dialog open={state} onOpenChange={setState}>
+                        <Dialog open={borrowState} onOpenChange={setBorrowState}>
                             <form>
                                 <DialogTrigger asChild>
-                                    <Button className="bg-green-500" disabled={!book.available}>BORROW</Button>
+                                    <Button className="cursor-pointer bg-green-500 disabled:bg-gray-500 w-full" disabled={!book.available}>BORROW</Button>
                                 </DialogTrigger>
                                 <DialogContent className="sm:max-w-[425px]">
                                     <DialogHeader>
@@ -42,7 +60,7 @@ const BookTable = ({ book }: IProps) => {
                                         <DialogTitle>Borrow</DialogTitle>
                                     </DialogHeader>
 
-                                    <AddBorrow book={{bookId:book._id, title: book.title, copies: book.copies}} key={book._id}/>
+                                    <AddBorrow book={{ bookId: book._id, title: book.title, copies: book.copies }} key={book._id} />
 
                                 </DialogContent>
                             </form>
