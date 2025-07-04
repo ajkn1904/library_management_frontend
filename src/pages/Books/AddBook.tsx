@@ -4,9 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateBookMutation } from "@/redux/api/baseApi";
-import type { IBooks } from "@/types/books.interface";
+import type { IBooksMutation } from "@/types/books.interface";
 import { useEffect } from "react";
-import { useForm, type FieldValue, type SubmitHandler } from "react-hook-form"
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 import { useNavigate } from "react-router";
 
 
@@ -15,7 +15,7 @@ const AddBook = () => {
     const form = useForm();
     const navigate = useNavigate();
 
-    const [createBook, { isSuccess, error, isError, isLoading, data }] = useCreateBookMutation();
+    const [createBook, { isSuccess, isError, isLoading, data }] = useCreateBookMutation();
 
     useEffect(() => {
         if (isSuccess) {
@@ -31,20 +31,20 @@ const AddBook = () => {
     }
 
     if (isError) {
-        return error.data?.message || "An error occurred while creating the book.";
+        return data?.message || "An error occurred while creating the book.";
     }
     if (isSuccess) {
         return <div className="text-green-500">Book created successfully!</div>;
     }
 
-    const onSubmit: SubmitHandler<FieldValue> = async (data) => {
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const bookData = {
             ...data,
             description: data.description ? data.description : "",
             copies: parseInt(data.copies),
-            available: data.copies < 0 ? false : true,
+            available: data.copies <= 0 ? false : true,
         }
-        await createBook(bookData as IBooks);
+        await createBook(bookData as IBooksMutation);
         form.reset();
     }
 
