@@ -6,8 +6,8 @@ import { useState } from 'react';
 import AddBorrow from '../Borrow/AddBorrow';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import EditBook from './EditBook';
-import toast from 'react-hot-toast';
 import { useDeleteBookMutation } from '@/redux/api/baseApi';
+import { toast } from 'react-toastify';
 
 interface IProps {
     book: IBooks;

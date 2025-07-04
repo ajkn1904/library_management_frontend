@@ -9,9 +9,9 @@ import { format } from "date-fns";
 import { CalendarIcon} from "lucide-react";
 import { useEffect } from "react";
 import { useForm, type FieldError, type FieldValues, type SubmitHandler } from "react-hook-form"
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import type { IBorrowProps } from "@/types/borrow.interface";
+import { toast } from "react-toastify";
 
 const AddBorrow = ({ book }: IBorrowProps) => {
 

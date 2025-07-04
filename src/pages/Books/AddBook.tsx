@@ -7,8 +7,9 @@ import { useCreateBookMutation } from "@/redux/api/baseApi";
 import type { IBooksMutation } from "@/types/books.interface";
 import { useEffect, useState } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
-import toast from "react-hot-toast";
+
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 
 const AddBook = () => {

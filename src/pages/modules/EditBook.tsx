@@ -8,7 +8,7 @@ import { useEditBookMutation } from "@/redux/api/baseApi";
 import type { IBooks} from "@/types/books.interface";
 import { useEffect } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 interface IEditBookProps extends IBooks {
   setEditState: (state: boolean) => void;
@@ -29,7 +29,7 @@ const EditBook = ( { setEditState, ...book }: IEditBookProps ) => {
     
         useEffect(() => {
             if (isSuccess) {
-                toast.success("Book edited successfully!");
+                toast.info("Book edited successfully!");
                 form.reset();
                 setEditState(false);
             }
