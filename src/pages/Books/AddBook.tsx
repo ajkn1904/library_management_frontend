@@ -19,7 +19,7 @@ const AddBook = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const [createBook, { isSuccess, isError, isLoading, data, error }] = useCreateBookMutation();
+    const [createBook, { isSuccess, isError, isLoading, error }] = useCreateBookMutation();
 
     useEffect(() => {
         if (isSuccess) {
@@ -48,7 +48,7 @@ const AddBook = () => {
     }, [isError, error]);
 
 
-    console.log(data);
+    //console.log(data);
 
     if (isLoading) {
         return <SkeletonCard />

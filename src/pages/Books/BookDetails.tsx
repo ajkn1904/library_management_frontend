@@ -6,7 +6,7 @@ import { SkeletonCard } from "../modules/SkeletonCard";
 const BookDetails = () => {
     const bookId = useParams().id as string;
     const { data, isLoading } = useGetBooksByIdQuery(bookId);
-    console.log(data);
+    //console.log(data);
     if (isLoading) {
         return <SkeletonCard />;
     }

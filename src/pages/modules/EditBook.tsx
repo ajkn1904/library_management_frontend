@@ -55,7 +55,7 @@ const EditBook = ({ setEditState, ...book }: IEditBookProps) => {
             copies: parseInt(data.copies),
             available: data.copies <= 0 ? false : true,
         }
-        console.log(newBookData);
+        //console.log(newBookData);
         await editBook({ id: book._id, newBookData });
     }
 
