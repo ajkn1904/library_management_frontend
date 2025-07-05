@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import EditBook from './EditBook';
 import { useDeleteBookMutation } from '@/redux/api/baseApi';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 interface IProps {
     book: IBooks;
@@ -15,10 +16,11 @@ interface IProps {
 
 
 const BookTable = ({ book }: IProps) => {
+    const navigate = useNavigate();
     const [borrowState, setBorrowState] = useState(false)
     const [editState, setEditState] = useState(false)
-  
-    const [deleteBook, {isSuccess, isError}] = useDeleteBookMutation();
+
+    const [deleteBook, { isSuccess, isError }] = useDeleteBookMutation();
 
 
     const handleDelete = async (id: string) => {
@@ -27,28 +29,38 @@ const BookTable = ({ book }: IProps) => {
             await deleteBook({ id });
         };
     }
-    
-    
-    if(isSuccess){
+
+
+    if (isSuccess) {
         toast.error(`Book ${book.title} deleted successfully!`);
     }
     if (isError) {
         toast.error("An error occurred while deleting the book. Please try again later.");
     }
 
+    const handleRowClick = () => {
+        navigate(`/books/${book._id}`);
+    };
+
+
     return (
         <>
-            <TableRow className="hover:bg-gray-100 transition-colors duration-200">
-                <TableCell className="font-medium max-w-[225px] overflow-hidden overflow-ellipsis">{book.title}</TableCell>
-                <TableCell className="text-left">{book.author}</TableCell>
-                <TableCell className="text-left">{book.genre}</TableCell>
-                <TableCell className="text-center">{book.isbn}</TableCell>
-                <TableCell className="text-center">{book.copies}</TableCell>
-                <TableCell>{book.available ? "Available" : "Unavailable"}</TableCell>
-                <TableCell>
+            <TableRow className="group hover:bg-gray-100 transition-colors duration-200" onClick={handleRowClick}>
+                <TableCell className="group-hover:text-blue-600 group-hover:cursor-pointer font-medium max-w-[225px] overflow-hidden overflow-ellipsis">
+                    {book.title}
+                </TableCell>
+                <TableCell className="group-hover:text-blue-600 group-hover:cursor-pointer text-left">{book.author}</TableCell>
+                <TableCell className="group-hover:text-blue-600 group-hover:cursor-pointer text-left">{book.genre}</TableCell>
+                <TableCell className="group-hover:text-blue-600 group-hover:cursor-pointer text-center">{book.isbn}</TableCell>
+                <TableCell className="group-hover:text-blue-600 group-hover:cursor-pointer text-center">{book.copies}</TableCell>
+                <TableCell className="group-hover:text-blue-600 group-hover:cursor-pointer">
+                    {book.available ? "Available" : "Unavailable"}
+                </TableCell>
+
+                <TableCell onClick={(e) => e.stopPropagation()}>
                     <div className='w-full'>
                         <div className='flex justify-between items-center p-4'>
-                            <Trash2 className='hover:text-red-600  cursor-pointer'  onClick={() => handleDelete(book._id)} />
+                            <Trash2 className='hover:text-red-600  cursor-pointer' onClick={() => handleDelete(book._id)} />
 
                             <Dialog open={editState} onOpenChange={setEditState}>
                                 <form>
