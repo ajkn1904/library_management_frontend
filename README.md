@@ -1,69 +1,100 @@
-# React + TypeScript + Vite
+# 📖 Library Management Frontend with React, TypeScript, TailwindCSS & ShadcnUI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a minimal library management system using **`Recact.js`** with **`TypeScript`** for type safety, **`TailwindCSS`** with **`ShadcnUI`** as the css libraries, and **`Redux Toolkit Query (RTK Query)`** for `State` & `API` handling.
 
-Currently, two official plugins are available:
+The system will allow users to view a list of books, perform CRUD operations, borrow books, and view a simple borrow summary—all without authentication, category filters, or payment integration.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The main goal is to build a functional and clean client-side application that interacts with a RESTful API, demonstrating proper state management, UI design, and core functionality.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🔑 Key Features
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The project includes:
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- Book Management - Add - Edit - Delete Book
+- Borrow Book
+- Book Details & Borrow Summary
+- Business logic enforcement (e.g., availability control on borrow)
+- Minimal & user-friendly UI/UX
+- Perform**CRUD** operations
+- Filtering features
+- Pagination
+- Responsive design
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🧱 Installation & Setup Process
+
+### CLI Commands :----------
+
+- `npm create vite@latest 'ProjectName' `
+- `npm init --y`
+- `npm install tailwindcss @tailwindcss/vite`
+- `npm install -D @types/node`
+- `npx shadcn@latest init`
+- `npm install @reduxjs/toolkit react-redux`
+- `npm i react-router`
+- `npm install react-toastify`
+
+
+### At `index.css` :----------
+```css
+@import "tailwindcss";
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### At `tsconfig.json` :----------
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```json
+// ...,
+"compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+// ...
+```
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
+### At `tsconfig.app.json` :----------
+
+```json
+"compilerOptions": {
+    // ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+    // ...
+}
+```
+
+## At `vite.config.ts` :----------
+
+```ts
+import path from "path";
+import tailwindcss from "@tailwindcss/vite";
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
     },
   },
-])
+  css: {
+    devSourcemap: true,
+  },
+});
 ```
+
+---
+
+## 🧩 **Page List**
+
+- **/books** – Displays a list of all books with options to view, edit, delete, and borrow.
+- **/create-book** – Form interface to add a new book to the system.
+- **/books/:id** – Detailed view of a single book’s information.
+- **/borrow-summary** – Displays an aggregated summary of all borrowed books
