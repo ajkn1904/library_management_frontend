@@ -3,6 +3,7 @@ import type { IBooks } from '../../types/books.interface';
 import BookTable from './../modules/BookTable';
 import { useGetBooksQuery } from '../../redux/api/baseApi'
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { SkeletonCard } from '../modules/SkeletonCard';
 
 
 const books = () => {
@@ -10,7 +11,7 @@ const books = () => {
     console.log(data);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <SkeletonCard />;
     }
     if (!data) {
         return <div>No books found</div>;
@@ -19,7 +20,7 @@ const books = () => {
 
     return (
         <div className='min-h-screen'>
-            <h1 className='font-bold font-serif text-5xl'>Book List</h1>
+            <h1 className='font-bold font-serif text-2xl md:text-3xl lg:text-4xl pt-3 ml-[15px]'>Book List</h1>
             <div className='space-y-5 mt-5 w-[96%] xl:max-w-[85%] mx-auto border border-gray-200 rounded-lg shadow-md mb-10'>
                 <Table>
                     <TableCaption>A list of your recent books.</TableCaption>

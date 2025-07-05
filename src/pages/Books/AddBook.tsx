@@ -10,6 +10,7 @@ import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { SkeletonCard } from "../modules/SkeletonCard";
 
 
 const AddBook = () => {
@@ -22,7 +23,7 @@ const AddBook = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            toast.success("✅ Book created successfully!");
+            toast.success("Book created successfully!");
             form.reset();
             navigate("/books");
         }
@@ -50,7 +51,7 @@ const AddBook = () => {
     console.log(data);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <SkeletonCard />
     }
 
 
@@ -69,7 +70,7 @@ const AddBook = () => {
 
     return (
         <>
-            <h1 className='font-bold font-serif text-5xl ml-[15px]'>Add Book</h1>
+            <h1 className='font-bold font-serif text-2xl md:text-3xl lg:text-4xl pt-3 ml-[15px]'>Add Book</h1>
 
             {errorMessage && (
                 <div className="bg-red-100 text-red-700 border border-red-300 p-3 rounded-md w-[90%] lg:max-w-[700px] mx-auto mt-4">

@@ -1,22 +1,25 @@
 import { useGetBooksByIdQuery } from "@/redux/api/baseApi";
+import { BookOpenText } from "lucide-react";
 import { useParams } from "react-router";
+import { SkeletonCard } from "../modules/SkeletonCard";
 
 const BookDetails = () => {
     const bookId = useParams().id as string;
     const { data, isLoading } = useGetBooksByIdQuery(bookId);
     console.log(data);
     if (isLoading) {
-        return <div className="text-center text-gray-500">Loading...</div>;
+        return <SkeletonCard />;
     }
 
     return (
         <div className="min-h-fit bg-blue-100 ">
-            <h1 className='font-bold font-serif text-4xl pt-3 ml-[15px]'>Book Details</h1>
+            <h1 className='font-serif text-2xl md:text-3xl lg:text-4xl pt-3 ml-[15px]'>Details of ❝<span className="font-bold">{data.data.title}</span>❞</h1>
 
             <div className="flex items-center justify-center px-4 py-12">
                 <div className="max-w-4xl w-full shadow-md rounded-xl p-8 flex flex-col-reverse md:flex-row gap-12 bg-[#fefaf6] items-center">
 
                     <div className="text-[#2c2c2c] space-y-6 md:w-1/2">
+                        <BookOpenText className="text-yellow-500 " />
                         <div>
                             <h3 className="font-semibold text-lg">Author</h3>
                             <p className="mt-1 text-base">{data.data.author}</p>
@@ -38,8 +41,8 @@ const BookDetails = () => {
                         <div>
                             <h3 className="font-semibold text-lg">Total</h3>
                             <p className="mt-1 text-base">
-                                <span className="font-semibold">{data.data?.copies} </span> {`${data.data?.copies && data.data?.copies <= 1 ? "copy" : "copies"
-                                    } available.`}
+                                <span className="font-semibold">{data.data.copies} </span> {`${data.data.copies < 2 ? "copy available." : "copies available."
+                                    } `}
                             </p>
                         </div>
                     </div>
