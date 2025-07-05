@@ -24,9 +24,9 @@ const BorrowSummary = () => {
                     <TableCaption>A list of your recent borrows.</TableCaption>
                     <TableHeader className='bg-blue-200 text-lg font-bold'>
                         <TableRow>
-                            <TableHead>TITLE</TableHead>
+                            <TableHead className='rounded-tl-lg'>TITLE</TableHead>
                             <TableHead className="text-center">ISBN</TableHead>
-                            <TableHead className="text-center">TOTAL QUANTITY</TableHead>
+                            <TableHead className="text-center rounded-tr-lg">TOTAL QUANTITY</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody className="p-5">

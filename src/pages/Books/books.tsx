@@ -26,16 +26,16 @@ const books = () => {
                     <TableCaption>A list of your recent books.</TableCaption>
                     <TableHeader className='bg-blue-200 text-lg font-bold'>
                         <TableRow>
-                            <TableHead className="w-[225px]">TITLE</TableHead>
+                            <TableHead className="w-[225px]  rounded-tl-lg">TITLE</TableHead>
                             <TableHead>AUTHOR</TableHead>
                             <TableHead>GENRE</TableHead>
                             <TableHead className="w-[90px]">ISBN</TableHead>
                             <TableHead>COPIES</TableHead>
                             <TableHead>AVAILABILITY</TableHead>
-                            <TableHead className="text-right overflow-hidden">ACTION</TableHead>
+                            <TableHead className="text-right overflow-hidden rounded-tr-lg">ACTION</TableHead>
                         </TableRow>
                     </TableHeader>
-                    <TableBody className="p-5">
+                    <TableBody>
                         {
                             !isLoading && data.data.map((book: IBooks) => <BookTable book={book} key={book._id} />)
                         }
