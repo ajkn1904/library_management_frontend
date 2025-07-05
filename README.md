@@ -1,4 +1,4 @@
-# 📖 Library Management Frontend with React, TypeScript, TailwindCSS & ShadcnUI
+# 📖 Library Management (Client Side)
 
 This is a minimal library management system using **`Recact.js`** with **`TypeScript`** for type safety, **`TailwindCSS`** with **`ShadcnUI`** as the css libraries, and **`Redux Toolkit Query (RTK Query)`** for `State` & `API` handling.
 
